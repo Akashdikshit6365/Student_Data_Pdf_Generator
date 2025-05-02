@@ -13,7 +13,6 @@ function App() {
     course: '',
     enrollment: '',
     address: '',
-    profilePic: null, // This will hold the image data
   });
 
   const handleChange = (e) => {
@@ -21,18 +20,6 @@ function App() {
       ...student,
       [e.target.name]: e.target.value,
     });
-  };
-
-  // Handle file input for profile picture
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setStudent({ ...student, profilePic: reader.result });
-      };
-      reader.readAsDataURL(file); // Converts the image file to a base64 string
-    }
   };
 
   const generatePDF = () => {
@@ -43,12 +30,6 @@ function App() {
     doc.setFontSize(20);
     doc.setTextColor(0, 102, 204); // Blue color for title
     doc.text('Student Information', 20, 20);
-
-    // Add a profile picture if available
-    if (student.profilePic) {
-      // Assuming the image is base64 encoded
-      doc.addImage(student.profilePic, 'PNG', 150, 20, 40, 40); // Position: x, y, width, height
-    }
 
     // Add text details with customized styles
     doc.setFontSize(14);
@@ -112,10 +93,6 @@ function App() {
         <div className="mb-3">
           <label>Address</label>
           <textarea name="address" className="form-control" rows="2" onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label>Profile Picture</label>
-          <input type="file" className="form-control" accept="image/*" onChange={handleImageChange} />
         </div>
       </div>
 
