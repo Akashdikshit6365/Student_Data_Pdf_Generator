@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/Student_Data_Pdf_Generator/static/css/main.722eafe8.css",
+    "main.js": "/Student_Data_Pdf_Generator/static/js/main.f828d84a.js",
+    "static/js/977.6be34015.chunk.js": "/Student_Data_Pdf_Generator/static/js/977.6be34015.chunk.js",
+    "static/js/732.a6bac751.chunk.js": "/Student_Data_Pdf_Generator/static/js/732.a6bac751.chunk.js",
+    "static/js/453.cd995922.chunk.js": "/Student_Data_Pdf_Generator/static/js/453.cd995922.chunk.js",
+    "index.html": "/Student_Data_Pdf_Generator/index.html",
+    "main.722eafe8.css.map": "/Student_Data_Pdf_Generator/static/css/main.722eafe8.css.map",
+    "main.f828d84a.js.map": "/Student_Data_Pdf_Generator/static/js/main.f828d84a.js.map",
+    "977.6be34015.chunk.js.map": "/Student_Data_Pdf_Generator/static/js/977.6be34015.chunk.js.map",
+    "732.a6bac751.chunk.js.map": "/Student_Data_Pdf_Generator/static/js/732.a6bac751.chunk.js.map",
+    "453.cd995922.chunk.js.map": "/Student_Data_Pdf_Generator/static/js/453.cd995922.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.722eafe8.css",
+    "static/js/main.f828d84a.js"
+  ]
+}
