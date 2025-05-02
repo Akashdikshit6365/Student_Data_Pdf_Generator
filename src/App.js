@@ -13,6 +13,7 @@ function App() {
     course: '',
     enrollment: '',
     address: '',
+    profilePic: null, // This will hold the image data
   });
 
   const handleChange = (e) => {
@@ -22,26 +23,47 @@ function App() {
     });
   };
 
+  // Handle file input for profile picture
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setStudent({ ...student, profilePic: reader.result });
+      };
+      reader.readAsDataURL(file); // Converts the image file to a base64 string
+    }
+  };
+
   const generatePDF = () => {
     const doc = new jsPDF();
-    
-    // Adding title
-    doc.setFontSize(20);
-    doc.text('Student Information', 20, 20);
-    
-    // Add details
-    doc.setFontSize(12);
-    doc.text(`Name: ${student.name}`, 20, 30);
-    doc.text(`Age: ${student.age}`, 20, 40);
-    doc.text(`Date of Birth: ${student.dob}`, 20, 50);
-    doc.text(`Gender: ${student.gender}`, 20, 60);
-    doc.text(`Email: ${student.email}`, 20, 70);
-    doc.text(`Phone: ${student.phone}`, 20, 80);
-    doc.text(`Course: ${student.course}`, 20, 90);
-    doc.text(`Enrollment No: ${student.enrollment}`, 20, 100);
-    doc.text(`Address: ${student.address}`, 20, 110);
 
-    // Save the PDF
+    // Set custom font and title
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(20);
+    doc.setTextColor(0, 102, 204); // Blue color for title
+    doc.text('Student Information', 20, 20);
+
+    // Add a profile picture if available
+    if (student.profilePic) {
+      // Assuming the image is base64 encoded
+      doc.addImage(student.profilePic, 'PNG', 150, 20, 40, 40); // Position: x, y, width, height
+    }
+
+    // Add text details with customized styles
+    doc.setFontSize(14);
+    doc.setTextColor(0, 0, 0); // Black text color
+    doc.text(`Name: ${student.name}`, 20, 40);
+    doc.text(`Age: ${student.age}`, 20, 50);
+    doc.text(`Date of Birth: ${student.dob}`, 20, 60);
+    doc.text(`Gender: ${student.gender}`, 20, 70);
+    doc.text(`Email: ${student.email}`, 20, 80);
+    doc.text(`Phone: ${student.phone}`, 20, 90);
+    doc.text(`Course: ${student.course}`, 20, 100);
+    doc.text(`Enrollment No: ${student.enrollment}`, 20, 110);
+    doc.text(`Address: ${student.address}`, 20, 120);
+
+    // Save the PDF with the student's name as the file name
     doc.save(`${student.name}_Details.pdf`);
   };
 
@@ -90,6 +112,10 @@ function App() {
         <div className="mb-3">
           <label>Address</label>
           <textarea name="address" className="form-control" rows="2" onChange={handleChange} />
+        </div>
+        <div className="mb-3">
+          <label>Profile Picture</label>
+          <input type="file" className="form-control" accept="image/*" onChange={handleImageChange} />
         </div>
       </div>
 
