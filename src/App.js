@@ -1,6 +1,5 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -16,8 +15,6 @@ function App() {
     address: '',
   });
 
-  const pdfRef = useRef();
-
   const handleChange = (e) => {
     setStudent({
       ...student,
@@ -25,24 +22,33 @@ function App() {
     });
   };
 
-
   const generatePDF = () => {
-    const input = pdfRef.current;
-    html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF();
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save(`${student.name}_Details.pdf`);
-    });
+    const doc = new jsPDF();
+    
+    // Adding title
+    doc.setFontSize(20);
+    doc.text('Student Information', 20, 20);
+    
+    // Add details
+    doc.setFontSize(12);
+    doc.text(`Name: ${student.name}`, 20, 30);
+    doc.text(`Age: ${student.age}`, 20, 40);
+    doc.text(`Date of Birth: ${student.dob}`, 20, 50);
+    doc.text(`Gender: ${student.gender}`, 20, 60);
+    doc.text(`Email: ${student.email}`, 20, 70);
+    doc.text(`Phone: ${student.phone}`, 20, 80);
+    doc.text(`Course: ${student.course}`, 20, 90);
+    doc.text(`Enrollment No: ${student.enrollment}`, 20, 100);
+    doc.text(`Address: ${student.address}`, 20, 110);
+
+    // Save the PDF
+    doc.save(`${student.name}_Details.pdf`);
   };
 
   return (
     <div className="container mt-5">
       <h2 className="text-center mb-4">Student Info Form 📝</h2>
 
-     
       <div className="card p-4 mb-4">
         <div className="mb-3">
           <label>Name</label>
@@ -87,24 +93,9 @@ function App() {
         </div>
       </div>
 
-
-      <div ref={pdfRef} className="card p-4 bg-light">
-        <h5 className="mb-3">Preview:</h5>
-        <p><strong>Name:</strong> {student.name}</p>
-        <p><strong>Age:</strong> {student.age}</p>
-        <p><strong>Date of Birth:</strong> {student.dob}</p>
-        <p><strong>Gender:</strong> {student.gender}</p>
-        <p><strong>Email:</strong> {student.email}</p>
-        <p><strong>Phone:</strong> {student.phone}</p>
-        <p><strong>Course:</strong> {student.course}</p>
-        <p><strong>Enrollment No:</strong> {student.enrollment}</p>
-        <p><strong>Address:</strong> {student.address}</p>
-      </div>
-
-      
       <div className="text-center mt-4">
         <button className="btn btn-primary" onClick={generatePDF}>
-           Download PDF
+          Download PDF
         </button>
       </div>
     </div>
